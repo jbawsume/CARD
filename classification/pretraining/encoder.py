@@ -33,7 +33,7 @@ class Model(nn.Module):
         self.f = []
         num_class = config.data.num_classes
         arch = 'resnet18'
-        in_channels = 1 if config.data.dataset != "CIFAR10" else 3
+        in_channels = 1 if config.data.dataset != "STATEFARM" else 3
         backbone = ResNetEmbedding(arch, in_channels)
         # obtain NN modules before the output linear layer
         for name, module in backbone.model.named_children():

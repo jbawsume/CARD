@@ -7,6 +7,7 @@ import torch.optim as optim
 import torchvision
 from torch import nn
 from torchvision import transforms
+from custom_dataset_loader import StateFarmDataset
 
 
 def set_random_seed(seed):
@@ -124,6 +125,13 @@ def get_dataset(args, config):
                                                           transform=transform)
         test_dataset = torchvision.datasets.FashionMNIST(root=config.data.dataroot, train=False, download=True,
                                                          transform=transform)
+    elif config.data.dataset == 'STATEFARM':
+        transform = transforms.ToTensor()
+        statefarm_dataset = StateFarmDataset(csv_file=config.data.data_datacsv, root_dir=config.data.dataroot,
+                                                          transform=transform)
+        train_length=int(0.7* len(statefarm_dataset))
+        test_length=len(statefarm_dataset)-train_length
+        train_dataset,test_dataset = torch.utils.data.random_split(statefarm_dataset,(train_length,test_length))
     elif config.data.dataset == "CIFAR10":
         data_norm_mean, data_norm_std = (0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)
         # data_norm_mean, data_norm_std = (0.5, 0.5, 0.5), (0.5, 0.5, 0.5)

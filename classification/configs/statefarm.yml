@@ -1,23 +1,24 @@
 data:
-    dataset: "CIFAR10"
+    dataset: "STATEFARM"
     seed: 2000
     label_min_max: [0.001, 0.999]
     num_classes: 10
     num_workers: 2
-    dataroot: './data/datasets/images/cifar10'
+    dataroot: '/content/gdrive/MyDrive/DataSet/imgs/train'
+    data_datacsv: '/content/gdrive/MyDrive/DataSet/driver_imgs_list.csv'
 
 model:
-    type: "simple"
+    type: "linear"
     data_dim: 3072
 #    data_dim: [3, 32, 32]
     n_input_channels: 3
     n_input_padding: 0
-    feature_dim: 4096
-    hidden_dim: 4096
+    feature_dim: 6144
+    hidden_dim: 6144
     cat_x: True
     cat_y_pred: True
-    arch: linear
-#    arch: resnet18
+#    arch: linear
+    arch: resnet18
     var_type: fixedlarge
     ema_rate: 0.9999
     ema: True
@@ -31,18 +32,14 @@ diffusion:
     num_figs: 10
     include_guidance: True  # concat y_t with aux pred as eps_theta input
     apply_aux_cls: True
-    trained_aux_cls_ckpt_path: "/content/gdrive/MyDrive/classification/pretrained/cifar10_ckpt"
-    trained_aux_cls_ckpt_name: "snapshot_supervised.ckpt"  # test accuracy 90.39%, applied in the paper
-#    trained_aux_cls_ckpt_name: "snapshot_self_supervised.ckpt"  # test accuracy 94.31%
     aux_cls:
-        arch: resnet18_ckpt  # lenet5
-        pre_train: False
+        pre_train: True
         joint_train: False
         n_pretrain_epochs: 10
         logging_interval: 1
     
 training:
-    batch_size: 256
+    batch_size: 48
     n_epochs: 1000
     warmup_epochs: 40
     add_t0_loss: False
@@ -57,13 +54,13 @@ training:
     image_folder: 'training_image_samples'
 
 sampling:
-    batch_size: 256
+    batch_size: 48
     sampling_size: 1000
     last_only: True
     image_folder: 'sampling_image_samples'
 
 testing:
-    batch_size: 250
+    batch_size: 48
     sampling_size: 1000
     last_only: True
     plot_freq: 200
