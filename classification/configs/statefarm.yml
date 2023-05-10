@@ -4,8 +4,8 @@ data:
     label_min_max: [0.001, 0.999]
     num_classes: 10
     num_workers: 2
-    dataroot: '/content/gdrive/MyDrive/DataSet/imgs/train'
-    data_datacsv: '/content/gdrive/MyDrive/DataSet/driver_imgs_list.csv'
+    dataroot: '/root/imgs/train'
+    data_datacsv: '/root/driver_imgs_list.csv'
 
 model:
     type: "linear"
