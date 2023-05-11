@@ -75,7 +75,7 @@ dependencies:
     - babel==2.9.1
     - backcall==0.2.0
     - bleach==4.1.0
-    - cachetools
+    - cachetools==5.1.0
     - cffi==1.15.0
     - charset-normalizer==2.0.7
     - cycler==0.11.0
