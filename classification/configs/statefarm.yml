@@ -55,13 +55,13 @@ training:
 
 sampling:
     batch_size: 48
-    sampling_size: 1000
+    sampling_size: 500
     last_only: True
     image_folder: 'sampling_image_samples'
 
 testing:
     batch_size: 48
-    sampling_size: 1000
+    sampling_size: 500
     last_only: True
     plot_freq: 200
     image_folder: 'testing_image_samples'
