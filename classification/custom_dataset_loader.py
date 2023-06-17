@@ -24,6 +24,7 @@ class StateFarmDataset(Dataset):
             image = torchvision.transforms.ToPILImage()(image)
             image = torchvision.transforms.Resize(192)(image)
             image = torchvision.transforms.ToTensor()(image)
+            image = image.contiguous()
 
         return (image, y_label)
 
