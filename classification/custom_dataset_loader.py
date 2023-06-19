@@ -21,7 +21,8 @@ class StateFarmDataset(Dataset):
         y_label = torch.tensor(int(y_label_str[-1]))
 
         if self.transform:
-            data_norm_mean, data_norm_std = (0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)
+            #data_norm_mean, data_norm_std = (0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)
+            data_norm_mean, data_norm_std = (0.5, 0.5, 0.5), (0.5, 0.5, 0.5)
             transform = torchvision.transforms.Compose([
                 torchvision.transforms.ToPILImage(),
                 torchvision.transforms.Resize(128),
