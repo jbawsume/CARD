@@ -26,7 +26,6 @@ class StateFarmDataset(Dataset):
             image = torchvision.transforms.Resize(128)(image)
             image = torchvision.transforms.ToTensor()(image)
             image = torchvision.transforms.Normalize(mean=data_norm_mean, std=data_norm_std)
-            image = image.contiguous()
 
         return (image, y_label)
 
