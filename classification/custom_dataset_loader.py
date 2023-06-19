@@ -22,11 +22,13 @@ class StateFarmDataset(Dataset):
 
         if self.transform:
             data_norm_mean, data_norm_std = (0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)
-            image = torchvision.transforms.ToPILImage()(image)
-            image = torchvision.transforms.Resize(128)(image)
-            image = torchvision.transforms.Normalize(mean=data_norm_mean, std=data_norm_std)
-            image = torchvision.transforms.ToTensor()(image)
-            image = image.contiguous()
+            transform = torchvision.transforms.Compose([
+                torchvision.transforms.ToPILImage(),
+                torchvision.transforms.Resize(128),
+                torchvision.transforms.ToTensor(),
+                torchvision.transforms.Normalize(mean=data_norm_mean, std=data_norm_std)
+            ])
+            image = transform(image)
 
         return (image, y_label)
 
