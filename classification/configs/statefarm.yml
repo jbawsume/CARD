@@ -13,8 +13,8 @@ model:
 #    data_dim: [3, 32, 32]
     n_input_channels: 3
     n_input_padding: 0
-    feature_dim: 6144
-    hidden_dim: 6144
+    feature_dim: 512
+    hidden_dim: 512
     cat_x: True
     cat_y_pred: True
 #    arch: linear
