@@ -593,7 +593,7 @@ class Diffusion(object):
                 plt.style.use('ggplot')
             ttest_pvalues = (ttest_rel(gen_y_2_class_probs[:, :, 0],
                                        gen_y_2_class_probs[:, :, 1],
-                                       axis=1, alternative='two-sided')).pvalue  # (batch_size, )
+                                       axis=1)).pvalue  # (batch_size, ) #, alternative='two-sided'
             ttest_reject = (ttest_pvalues < config.testing.ttest_alpha)  # (batch_size, )
 
             if len(majority_vote_by_batch_list[current_t]) == 0:
