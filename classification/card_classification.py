@@ -92,7 +92,7 @@ class Diffusion(object):
                     nn.ReLU(),
                     nn.Linear(100, config.data.num_classes)
                 ).to(self.device)
-            elif config.data.dataset in ["FashionMNIST", "CIFAR10", "CIFAR100"]:
+            elif config.data.dataset in ["FashionMNIST", "CIFAR10", "CIFAR100",'STATEFARM']:
                 if config.diffusion.aux_cls.arch == "lenet":
                     self.cond_pred_model = LeNet(config.data.num_classes,
                                                  config.model.n_input_channels,

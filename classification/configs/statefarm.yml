@@ -33,6 +33,7 @@ diffusion:
     include_guidance: True  # concat y_t with aux pred as eps_theta input
     apply_aux_cls: True
     aux_cls:
+        arch: resnet18_ckpt
         pre_train: True
         joint_train: False
         n_pretrain_epochs: 10
