@@ -17,7 +17,7 @@ model:
     hidden_dim: 512
     cat_x: True
     cat_y_pred: True
-    arch: simple
+    arch: linear
     #arch: resnet18
     var_type: fixedlarge
     ema_rate: 0.9999
@@ -31,9 +31,8 @@ diffusion:
     vis_step: 100
     num_figs: 10
     include_guidance: True  # concat y_t with aux pred as eps_theta input
-    apply_aux_cls: True
+    apply_aux_cls: False
     aux_cls:
-        arch: resnet18_ckpt
         pre_train: True
         joint_train: False
         n_pretrain_epochs: 10
