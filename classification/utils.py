@@ -126,7 +126,10 @@ def get_dataset(args, config):
         test_dataset = torchvision.datasets.FashionMNIST(root=config.data.dataroot, train=False, download=True,
                                                          transform=transform)
     elif config.data.dataset == 'STATEFARM':
-        transform = transforms.ToTensor()
+        transform = transforms.Compose(
+            [transforms.ToPILImage(),
+                transforms.Resize(128),transforms.ToTensor()
+             ])
         statefarm_dataset = StateFarmDataset(csv_file=config.data.data_datacsv, root_dir=config.data.dataroot,
                                                           transform=transform)
         train_length=int(0.7* len(statefarm_dataset))
