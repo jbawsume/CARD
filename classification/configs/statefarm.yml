@@ -31,7 +31,7 @@ diffusion:
     vis_step: 100
     num_figs: 10
     include_guidance: True  # concat y_t with aux pred as eps_theta input
-    apply_aux_cls: False
+    apply_aux_cls: True
     aux_cls:
         pre_train: True
         joint_train: False
