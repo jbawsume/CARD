@@ -9,7 +9,7 @@ data:
 
 model:
     type: "linear"
-    data_dim: 3072
+    data_dim: 65280
 #    data_dim: [3, 32, 32]
     n_input_channels: 3
     n_input_padding: 0
