@@ -17,8 +17,8 @@ model:
     hidden_dim: 4096
     cat_x: True
     cat_y_pred: True
-    arch: linear
-    #arch: resnet18
+    #arch: linear
+    arch: resnet18
     var_type: fixedlarge
     ema_rate: 0.9999
     ema: True
