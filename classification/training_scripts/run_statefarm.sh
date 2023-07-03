@@ -1,4 +1,4 @@
-export EXP_DIR=./results
+export EXP_DIR=/root/autodl-tmp/results
 export N_STEPS=1000
 export RUN_NAME=run_1
 export PRIOR_TYPE=f_phi_prior
