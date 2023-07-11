@@ -19,7 +19,7 @@ model:
     cat_y_pred: True
     #arch: linear
     #arch: resnet18
-    arch: cnn
+    arch: vgg16
     var_type: fixedlarge
     ema_rate: 0.9999
     ema: True

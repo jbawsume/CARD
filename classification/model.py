@@ -58,7 +58,7 @@ class ConditionalModel(nn.Module):
             elif arch == 'vgg16':
                 self.encoder_x = Vgg16(num_classes=10)
             elif arch == 'cnn':
-                self.encoder_x = EncoderX(input_channels=config.model.n_input_channels,embedding_dim=data_dim)
+                self.encoder_x = EncoderX(input_channels=config.model.n_input_channels,embedding_dim=128)
             elif arch == 'lenet5':
                 self.encoder_x = LeNet5(feature_dim, config.model.n_input_channels, config.model.n_input_padding)
             else:
