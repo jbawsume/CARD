@@ -18,7 +18,8 @@ model:
     cat_x: True
     cat_y_pred: True
     #arch: linear
-    arch: resnet18
+    #arch: resnet18
+    arch: cnn
     var_type: fixedlarge
     ema_rate: 0.9999
     ema: True
@@ -39,28 +40,28 @@ diffusion:
         logging_interval: 1
     
 training:
-    batch_size: 12
-    n_epochs: 200
+    batch_size: 48
+    n_epochs: 100
     warmup_epochs: 40
     add_t0_loss: False
     n_steps_req_grad: 100
     n_minibatches_add_ce: 20
     n_ce_epochs_warmup: 10
     n_ce_epochs_interval: 50
-    n_sanity_check_epochs_freq: 150
+    n_sanity_check_epochs_freq: 50
     snapshot_freq: 1000000000
     logging_freq: 1200
     validation_freq: 10
     image_folder: 'training_image_samples'
 
 sampling:
-    batch_size: 12
+    batch_size: 48
     sampling_size: 500
     last_only: True
     image_folder: 'sampling_image_samples'
 
 testing:
-    batch_size: 12
+    batch_size: 48
     sampling_size: 500
     last_only: True
     plot_freq: 200

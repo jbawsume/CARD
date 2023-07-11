@@ -32,7 +32,7 @@ class ConditionalModel(nn.Module):
         # encoder for x
         if config.data.dataset == 'toy':
             self.encoder_x = nn.Linear(data_dim, feature_dim)
-        elif config.data.dataset in ['FashionMNIST', 'MNIST', 'CIFAR10', 'CIFAR100', 'IMAGENE100']:
+        elif config.data.dataset in ['FashionMNIST', 'MNIST', 'CIFAR10', 'CIFAR100', 'IMAGENE100','STATEFARM']:
             if arch == 'linear':
                 self.encoder_x = nn.Sequential(
                     nn.Linear(data_dim, hidden_dim),
@@ -55,6 +55,10 @@ class ConditionalModel(nn.Module):
                 )
             elif arch == 'lenet':
                 self.encoder_x = LeNet(feature_dim, config.model.n_input_channels, config.model.n_input_padding)
+            elif arch == 'vgg16':
+                self.encoder_x = Vgg16(num_classes=10)
+            elif arch == 'cnn':
+                self.encoder_x = EncoderX(input_channels=input_channelsconfig.model.n_input_channels,embedding_dim=data_dim)
             elif arch == 'lenet5':
                 self.encoder_x = LeNet5(feature_dim, config.model.n_input_channels, config.model.n_input_padding)
             else:
@@ -155,6 +159,102 @@ class FashionCNN(nn.Module):
             out = self.fc3(out)
 
         return out
+
+#VGG16 implementation as image encorder
+
+class VGG16(nn.Module):
+    def __init__(self, num_classes=1000):
+        super(VGG16, self).__init__()
+        
+        self.features = nn.Sequential(
+            nn.Conv2d(3, 64, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(64, 64, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(128, 128, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 256, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            
+            nn.Conv2d(256, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            
+            nn.Conv2d(512, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(512, 512, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2)
+        )
+        
+        self.avgpool = nn.AdaptiveAvgPool2d((7, 7))
+        
+        self.classifier = nn.Sequential(
+            nn.Linear(512 * 7 * 7, 4096),
+            nn.ReLU(inplace=True),
+            nn.Dropout(),
+            nn.Linear(4096, 4096),
+            nn.ReLU(inplace=True),
+            nn.Dropout(),
+            nn.Linear(4096, num_classes)
+        )
+        
+    def forward(self, x):
+        x = self.features(x)
+        x = self.avgpool(x)
+        x = torch.flatten(x, 1)
+        x = self.classifier(x)
+        return x
+
+#Simple CNN implementation as image encorder
+
+
+class EncoderX(nn.Module):
+    def __init__(self, input_channels=3, embedding_dim=128):
+        super(EncoderX, self).__init__()
+        
+        self.conv_layers = nn.Sequential(
+            nn.Conv2d(input_channels, 64, kernel_size=3, stride=1, padding=1),
+            nn.BatchNorm2d(64),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
+            nn.BatchNorm2d(128),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
+            nn.BatchNorm2d(256),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2)
+        )
+        
+        self.fc_layers = nn.Sequential(
+            nn.Linear(256 * 16 * 16, embedding_dim),
+            nn.ReLU(inplace=True)
+        )
+        
+    def forward(self, x):
+        x = self.conv_layers(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc_layers(x)
+        return x
 
 
 # ResNet 18 or 50 as image encoder
