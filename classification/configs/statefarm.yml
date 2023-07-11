@@ -9,7 +9,7 @@ data:
 
 model:
     type: "linear"
-    data_dim: 65280
+    data_dim: 86016
 #    data_dim: [3, 32, 32]
     n_input_channels: 3
     n_input_padding: 0
@@ -41,14 +41,14 @@ diffusion:
     
 training:
     batch_size: 48
-    n_epochs: 100
-    warmup_epochs: 40
+    n_epochs: 10
+    warmup_epochs: 2
     add_t0_loss: False
     n_steps_req_grad: 100
     n_minibatches_add_ce: 20
     n_ce_epochs_warmup: 10
     n_ce_epochs_interval: 50
-    n_sanity_check_epochs_freq: 50
+    n_sanity_check_epochs_freq: 5
     snapshot_freq: 1000000000
     logging_freq: 1200
     validation_freq: 10
